@@ -1,0 +1,17 @@
+{
+  "name": "myKeolis",
+  "developer": {
+    "name": "Bornholm"
+  },
+  "type": "privileged",
+  "icons": {
+    "128": "icons/icon-128.png"
+  },
+  "launch_path": "/index.html",
+  "default_locale": "en",
+  "permissions": {
+    "systemXHR": {
+      "description": "Required to access Keolis endpoints"
+    }
+  }
+}
