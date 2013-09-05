@@ -7,23 +7,17 @@
     '$rootScope', '$q',
     function($rootScope, $q) {
 
-      function getXHRResponse(xhr) {
-        return xhr.responseJSON ||
-          xhr.responseXML ||
-          xhr.response;
-      };
-
       function errorHandler(deferred) {
         var xhr = this;
         return $rootScope.$apply(function() {
-          return deferred.reject(xhr.status, xhr);
+          return deferred.reject(xhr.status);
         });
       }
 
       function loadHandler(deferred) {
         var xhr = this;
         return $rootScope.$apply(function() {
-           return deferred.resolve(getXHRResponse(xhr));
+           return deferred.resolve(xhr);
         });
       }
 
@@ -33,7 +27,7 @@
           if (evt.lengthComputable) {
             return deferred.notify(evt.loaded / evt.total, xhr);
           } else {
-            return deferred.notify(-1, xhr);
+            return deferred.notify(-1);
           }
         });
       }

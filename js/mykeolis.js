@@ -2,7 +2,7 @@
   'use strict';
   var angular = w.angular;
 
-  var myKeolis = angular.module('myKeolis', ['ngRoute', 'FirefoxOS', 'localStorage']);
+  var myKeolis = angular.module('myKeolis', ['ngRoute', 'FirefoxOS', 'localStorage', 'ngTouch']);
 
   myKeolis.config([
     '$routeProvider',
@@ -62,11 +62,11 @@
        return endpoint + cityCode + '.php?xml=1&ligne='+codeLigne+'&sens='+sens;
       };
 
-      function allNodes(xPathResult) {
+      function transformXPathResult(xPathResult, transform) {
         var nodes = [];
         var current;
         while((current = xPathResult.iterateNext())) {
-          nodes.push(current);
+          nodes.push(transform(current));
         }
         return nodes;
       }
@@ -91,10 +91,11 @@
       KService.getLinesList = function() {
         var deferred = $q.defer();
         var url = KService.getLinesServiceURL();
-        systemXHR(url, {'responseType': 'xml'})
-          .then(function(xml) {
-            var xPathResult = xml.evaluate('//alss/als/ligne', xml);
-            var lines = allNodes(xPathResult).map(toObject);
+        systemXHR(url)
+          .then(function(xhr) {
+            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+            var xPathResult = xml.evaluate('//alss/als/ligne', xml, null, XPathResult.ANY_TYPE, null);
+            var lines = transformXPathResult(xPathResult, toObject);
             return deferred.resolve(lines);
           });
         return deferred.promise;
@@ -103,10 +104,11 @@
       KService.getStopsList = function(codeLigne, sens) {
         var deferred = $q.defer();
         var url = KService.getStopsServiceURL(codeLigne, sens);
-        systemXHR(url, {'responseType': 'xml'})
-          .then(function(xml) {
-            var xPathResult = xml.evaluate('//alss/als', xml);
-            var stops = allNodes(xPathResult).map(toStopObject);
+        systemXHR(url)
+          .then(function(xhr) {
+            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+            var xPathResult = xml.evaluate('//alss/als', xml, null, XPathResult.ANY_TYPE, null);
+            var stops = transformXPathResult(xPathResult, toStopObject);
             return deferred.resolve(stops);
           });
         return deferred.promise;
@@ -116,9 +118,10 @@
         var deferred = $q.defer();
         var url = KService.getSchedulesServiceURL(refsArret);
         systemXHR(url, {'responseType': 'xml'})
-          .then(function(xml) {
-            var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml);
-            var schedules = allNodes(xPathResult).map(toObject);
+          .then(function(xhr) {
+            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+            var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml, null, XPathResult.ANY_TYPE, null);
+            var schedules = transformXPathResult(xPathResult, toObject);
             return deferred.resolve(schedules);
           });
         return deferred.promise;

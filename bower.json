@@ -24,6 +24,7 @@
     "bootstrap": "~3.0.0",
     "zepto": "~1.0.0",
     "angular-route": "~1.2.0-rc.1",
-    "Angular-localStorage": "~0.1.5"
+    "Angular-localStorage": "~0.1.5",
+    "angular-touch": "~1.2.0-rc.2"
   }
 }
