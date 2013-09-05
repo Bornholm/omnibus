@@ -2,6 +2,7 @@
 <html ng-app="myKeolis">
   <head>
     <title>myKeolis</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -12,8 +13,11 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavBarCtrl">
       <div class="container">
         <a class="navbar-brand" href="#/">myKeolis</a>
-        <button type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right">
+        <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right">
           <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button ng-show="currentPath === '/new'" type="button" ng-click="saveNewRecord()" class="btn btn-default navbar-btn pull-right">
+          <span class="glyphicon glyphicon-save"></span>
         </button>
       </div>
     </nav>
@@ -25,9 +29,13 @@
     </div>
 
     <script type="text/ng-template" id="home.html">
-      <div ng-repeat="i in items">
+      <div ng-repeat="r in records" ng-init="updateRecordSchedules(r)">
         <div class="row">
           <div class="col-md-12">
+            <b>Ligne <span ng-bind="r.line.nom"></span> - Direction <span ng-bind="r.line.vers"></span><b>
+            <ul>
+              <li ng-repeat="s in r.schedules" ng-bind="s.duree"></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -36,13 +44,27 @@
     <script type="text/ng-template" id="new-item.html">
       <div class="row">
         <div class="col-md-12">
-         
+          <form role="form">
+            <div class="form-group">
+              <label for="lineSelect">Ligne</label>
+              <select class="form-control" ng-disabled="!lines" ng-model="newRecord.line" ng-options="'Ligne ' + l.nom + ' -> ' + l.vers for l in lines" id="lineSelect">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="stopSelect">Arrêt</label>
+              <select class="form-control" ng-disabled="!stops" ng-model="newRecord.stop" ng-options="s.nom for s in stops" id="stopSelect">
+              </select>
+            </div>
+          </form>
         </div>
       </div>
     </script>
 
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="bower_components/Angular-localStorage/src/localStorage"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/firefoxos.js"></script>
     <script src="js/mykeolis.js"></script>

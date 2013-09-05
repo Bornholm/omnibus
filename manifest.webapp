@@ -8,7 +8,7 @@
     "128": "icons/icon-128.png"
   },
   "launch_path": "/index.html",
-  "default_locale": "en",
+  "default_locale": "fr",
   "permissions": {
     "systemXHR": {
       "description": "Required to access Keolis endpoints"

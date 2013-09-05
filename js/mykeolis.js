@@ -2,7 +2,34 @@
   'use strict';
   var angular = w.angular;
 
-  var myKeolis = angular.module('myKeolis', ['FirefoxOS']);
+  var myKeolis = angular.module('myKeolis', ['ngRoute', 'FirefoxOS', 'localStorage']);
+
+  myKeolis.config([
+    '$routeProvider',
+    function($routeProvider) {
+
+      $routeProvider.when('/', {
+        templateUrl: 'home.html',
+        controller: 'HomeCtrl'
+      });
+
+      $routeProvider.when('/new', {
+        templateUrl: 'new-item.html',
+        controller: 'NewItemCtrl'
+      });
+
+      $routeProvider.html5Mode = false;
+
+      $routeProvider.otherwise({redirectTo: '/'});
+
+    }
+  ]);
+
+  myKeolis.run(['KService', function(KService) {
+    KService
+      .setKeolisEndpoint('http://timeo3.keolis.com/relais/')
+      .setCityCode(217);
+  }]);
 
   myKeolis.factory('KService', [
     '$http', '$q', 'systemXHR',
@@ -23,19 +50,77 @@
         return KService;
       };
 
+      KService.getSchedulesServiceURL = function(refsArret) {
+       return endpoint + cityCode + '.php?xml=3&ran=1&refs='+refsArret;
+      };
+
       KService.getLinesServiceURL = function() {
        return endpoint + cityCode + '.php?xml=1';
       };
 
+      KService.getStopsServiceURL = function(codeLigne, sens) {
+       return endpoint + cityCode + '.php?xml=1&ligne='+codeLigne+'&sens='+sens;
+      };
+
+      function allNodes(xPathResult) {
+        var nodes = [];
+        var current;
+        while((current = xPathResult.iterateNext())) {
+          nodes.push(current);
+        }
+        return nodes;
+      }
+
+      function toObject(node) {
+        var obj = {};
+        var len = node.children.length;
+        var child;
+        while(len--) {
+          child = node.children[len];
+          obj[child.nodeName] = child.textContent;
+        }
+        return obj;
+      }
+
+      function toStopObject(node) {
+        var obj = toObject(node.children[0]);
+        obj.refs = node.children[2].textContent;
+        return obj;
+      }
+
       KService.getLinesList = function() {
         var deferred = $q.defer();
         var url = KService.getLinesServiceURL();
-        var xhr = new XMLHttpRequest({mozSystem: true});
-        xhr.onload = function() {
-          console.log(this.responseText);
-        };
-        xhr.open('get', url, true);
-        xhr.send();
+        systemXHR(url, {'responseType': 'xml'})
+          .then(function(xml) {
+            var xPathResult = xml.evaluate('//alss/als/ligne', xml);
+            var lines = allNodes(xPathResult).map(toObject);
+            return deferred.resolve(lines);
+          });
+        return deferred.promise;
+      };
+
+      KService.getStopsList = function(codeLigne, sens) {
+        var deferred = $q.defer();
+        var url = KService.getStopsServiceURL(codeLigne, sens);
+        systemXHR(url, {'responseType': 'xml'})
+          .then(function(xml) {
+            var xPathResult = xml.evaluate('//alss/als', xml);
+            var stops = allNodes(xPathResult).map(toStopObject);
+            return deferred.resolve(stops);
+          });
+        return deferred.promise;
+      };
+
+      KService.getSchedulesList = function(refsArret) {
+        var deferred = $q.defer();
+        var url = KService.getSchedulesServiceURL(refsArret);
+        systemXHR(url, {'responseType': 'xml'})
+          .then(function(xml) {
+            var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml);
+            var schedules = allNodes(xPathResult).map(toObject);
+            return deferred.resolve(schedules);
+          });
         return deferred.promise;
       };
 
@@ -47,6 +132,12 @@
     '$scope', '$location',
     function($scope, $location) {
 
+      $scope.$location = $location;
+
+      $scope.$watch('$location.path()', function(newPath) {
+        $scope.currentPath = newPath;
+      });
+
       $scope.showNewItemView = function() {
         $location.path('/new');
       };
@@ -55,43 +146,41 @@
   ]);
 
   myKeolis.controller('HomeCtrl', [
-    '$scope', '$location', 'KService',
-    function($scope, $location, KService) {
+    '$location', 'KService', '$scope', '$store',
+    function($location, KService, $scope, $store) {
 
-      $scope.items = new Array(10);
+      $scope.records = $store.get('records') || [];
+      
 
-      KService
-        .setKeolisEndpoint('http://timeo3.keolis.com/relais/')
-        .setCityCode(117);
+      $scope.updateRecordSchedules = function(record) {
+        record.schedules = KService.getSchedulesList(record.stop.refs);
+      };
 
-      KService.getLinesList();
     }
   ]);
 
   myKeolis.controller('NewItemCtrl', [
-    '$scope',
-    function($scope) {
+    '$rootScope', '$scope', 'KService', '$store', '$location',
+    function($rootScope, $scope, KService, $store, $location) {
 
-    }
-  ]);
+      $rootScope.newRecord = {};
 
-  myKeolis.config([
-    '$routeProvider',
-    function($routeProvider) {
+      $scope.lines = KService.getLinesList();
 
-      $routeProvider.when('/', {
-        templateUrl: 'home.html',
-        controller: 'HomeCtrl'
+      $scope.$watch('newRecord.line', function(line) {
+        $scope.stops = null;
+        if(line) {
+          $scope.stops = KService.getStopsList(line.code, line.sens);
+        }
       });
 
-      $routeProvider.when('/new', {
-        templateUrl: 'new-item.html',
-        controller: 'NewItemCtrl'
-      });
-
-      $routeProvider.html5Mode = false;
-
-      $routeProvider.otherwise({redirectTo: '/'});
+      $rootScope.saveNewRecord = function() {
+        var records = $store.get('records') || [];
+        records.push(angular.copy($rootScope.newRecord));
+        $store.set('records', records);
+        $rootScope.newRecord = {};
+        $location.path('/');
+      };
 
     }
   ]);
