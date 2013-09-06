@@ -2,7 +2,7 @@
   'use strict';
   var angular = w.angular;
 
-  var myKeolis = angular.module('myKeolis', ['ngRoute', 'FirefoxOS', 'localStorage', 'ngTouch']);
+  var myKeolis = angular.module('myKeolis', ['ngAnimate', 'ngRoute', 'FirefoxOS', 'localStorage', 'ngTouch']);
 
   myKeolis.config([
     '$routeProvider',
@@ -148,15 +148,25 @@
     }
   ]);
 
+  $
   myKeolis.controller('HomeCtrl', [
-    '$location', 'KService', '$scope', '$store',
-    function($location, KService, $scope, $store) {
+    '$location', 'KService', '$scope', '$store', '$timeout',
+    function($location, KService, $scope, $store, $timeout) {
 
       $scope.records = $store.get('records') || [];
-      
 
       $scope.updateRecordSchedules = function(record) {
-        record.schedules = KService.getSchedulesList(record.stop.refs);
+        delete record.schedules;
+        var promise = KService.getSchedulesList(record.stop.refs);
+        record.schedules = promise;
+        return promise;
+      };
+
+      $scope.autoUpdateRecordSchedule = function(record) {
+        $scope.updateRecordSchedules(record)
+          .then(function() {
+            $timeout($scope.autoUpdateRecordSchedule.bind(null, record), 5000);
+          })
       };
 
     }

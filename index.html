@@ -7,6 +7,7 @@
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
+    <link href="css/animations.css" rel="stylesheet" media="screen">
   </head>
   <body>
 
@@ -29,12 +30,12 @@
     </div>
 
     <script type="text/ng-template" id="home.html">
-      <div ng-repeat="r in records" ng-init="updateRecordSchedules(r)">
-        <div class="row">
+      <div ng-repeat="r in records" ng-init="autoUpdateRecordSchedule(r)">
+        <div class="row stop">
           <div class="col-md-12">
             <b>Ligne <span ng-bind="r.line.nom"></span> - Direction <span ng-bind="r.line.vers"></span><b>
             <ul>
-              <li ng-repeat="s in r.schedules" ng-bind="s.duree"></li>
+              <li class="reveal-animation schedule swipe-left-animation" ng-repeat="s in r.schedules track by s.duree" ng-bind="s.duree"></li>
             </ul>
           </div>
         </div>
@@ -62,6 +63,7 @@
 
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
