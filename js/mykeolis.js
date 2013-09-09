@@ -165,8 +165,16 @@
       $scope.autoUpdateRecordSchedule = function(record) {
         $scope.updateRecordSchedules(record)
           .then(function() {
-            $timeout($scope.autoUpdateRecordSchedule.bind(null, record), 5000);
+            $timeout($scope.autoUpdateRecordSchedule.bind(null, record), 20000);
           })
+      };
+
+      $scope.removeRecord = function(record) {
+        var index = $scope.records.indexOf(record);
+        if(~index) {
+          $scope.records.splice(index, 1);
+          $store.set('records', $scope.records);
+        }
       };
 
     }

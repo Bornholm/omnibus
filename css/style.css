@@ -1,7 +1,41 @@
 body {
-  padding-top: 70px;
+  background: url('../img/cream_pixels.png') repeat;
+  background-color: #E9EAE5;
+  font-family: 'Ubuntu Sans', 'Droid Sans', sans-serif;
+  color: #3D3D3D;
 }
 
-.stop {
-  min-height: 70px;
+.navbar {
+  background-color: #3AB6FF;
+  -webkit-box-shadow:  0px 1px 2px 2px rgba(3, 3, 3, 0.1);
+  box-shadow:  0px 1px 2px 2px rgba(3, 3, 3, 0.1);
+  border: none;
+}
+
+.navbar-brand.title {
+  font-weight: bold;
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: #5c5c5c;
+}
+
+.title > .keolis {
+  text-shadow: 1px 1px 0px #eee;
+  filter: dropshadow(color=#eee, offx=1, offy=1);
+}
+
+.title > .my {
+  font-size: 16px;
+  color: #DAF1FF;
+}
+
+.content {
+  padding-top: 50px;
+}
+
+.keolis-record {
+  border-bottom: 1px solid #8D8F84;
+  border-top: 1px solid white;
+  padding-top: 10px;
+  background: #F8FAFB;
 }

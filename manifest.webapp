@@ -5,7 +5,9 @@
   },
   "type": "privileged",
   "icons": {
-    "128": "icons/icon-128.png"
+    "60": "/img/icon-60.png",
+    "30": "/img/icon-30.png",
+    "128": "/img/icon-128.png"
   },
   "launch_path": "/index.html",
   "default_locale": "fr",
