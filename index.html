@@ -39,11 +39,16 @@
           <div class="col-md-12">
             <button type="button pull-right" ng-click="removeRecord(r)" class="close" aria-hidden="true">&times;</button>
             <p>
-              <b>Ligne <span ng-bind="r.line.nom"></span> - Arrêt <span ng-bind="r.stop.nom"></span></b><br />
+              <b>
+                <span ng-bind="r.city.name"></span> - Ligne <span ng-bind="r.line.nom"></span>
+                <br />
+                Arrêt <span ng-bind="r.stop.nom"></span>
+              </b>
+              <br />
               <i class="destination">Direction <span ng-bind="r.line.vers"></span></i>
             </p>
             <ul>
-              <li ng-repeat="s in r.schedules track by s.duree">
+              <li ng-repeat="s in r.schedules">
                 <b ng-bind="s.duree"></b>&nbsp;
                 (<i ng-bind="s.moment.fromNow()"></i>)
               </li>
@@ -60,6 +65,11 @@
       <div class="row ng-cloak">
         <div class="col-md-12">
           <form role="form">
+            <div class="form-group">
+              <label for="citySelect">Ville</label>
+              <select class="form-control" ng-disabled="!cities" ng-model="newRecord.city" ng-options="c.name for c in cities" id="citySelect">
+              </select>
+            </div>
             <div class="form-group">
               <label for="lineSelect">Ligne</label>
               <select class="form-control" ng-disabled="!lines" ng-model="newRecord.line" ng-options="'Ligne ' + l.nom + ' -> ' + l.vers for l in lines" id="lineSelect">

@@ -36,9 +36,7 @@
   ]);
 
   myKeolis.run(['KService', function(KService) {
-    KService
-      .setKeolisEndpoint('http://timeo3.keolis.com/relais/')
-      .setCityCode(217);
+    KService.setKeolisEndpoint('http://timeo3.keolis.com/relais/');
   }]);
 
   myKeolis.factory('visibly', ['$rootScope', function($rootScope) {
@@ -65,7 +63,6 @@
 
       var KService = {};
 
-      var cityCode;
       var endpoint;
 
       KService.setKeolisEndpoint = function(url) {
@@ -73,20 +70,15 @@
         return KService;
       };
 
-      KService.setCityCode = function(code) {
-        cityCode = code;
-        return KService;
-      };
-
-      KService.getSchedulesServiceURL = function(refsArret) {
+      KService.getSchedulesServiceURL = function(cityCode, refsArret) {
        return endpoint + cityCode + '.php?xml=3&ran=1&refs='+refsArret;
       };
 
-      KService.getLinesServiceURL = function() {
+      KService.getLinesServiceURL = function(cityCode) {
        return endpoint + cityCode + '.php?xml=1';
       };
 
-      KService.getStopsServiceURL = function(codeLigne, sens) {
+      KService.getStopsServiceURL = function(cityCode, codeLigne, sens) {
        return endpoint + cityCode + '.php?xml=1&ligne='+codeLigne+'&sens='+sens;
       };
 
@@ -123,9 +115,9 @@
         return obj;
       }
 
-      KService.getLinesList = function() {
+      KService.getLinesList = function(cityCode) {
         var deferred = $q.defer();
-        var url = KService.getLinesServiceURL();
+        var url = KService.getLinesServiceURL(cityCode);
         systemXHR(url)
           .then(function(xhr) {
             var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
@@ -136,9 +128,9 @@
         return deferred.promise;
       };
 
-      KService.getStopsList = function(codeLigne, sens) {
+      KService.getStopsList = function(cityCode, codeLigne, sens) {
         var deferred = $q.defer();
-        var url = KService.getStopsServiceURL(codeLigne, sens);
+        var url = KService.getStopsServiceURL(cityCode, codeLigne, sens);
         systemXHR(url)
           .then(function(xhr) {
             var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
@@ -149,9 +141,9 @@
         return deferred.promise;
       };
 
-      KService.getSchedulesList = function(refsArret) {
+      KService.getSchedulesList = function(cityCode, refsArret) {
         var deferred = $q.defer();
-        var url = KService.getSchedulesServiceURL(refsArret);
+        var url = KService.getSchedulesServiceURL(cityCode, refsArret);
         systemXHR(url, {'responseType': 'xml'})
           .then(function(xhr) {
             var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
@@ -214,7 +206,7 @@
 
       $scope.updateRecordSchedules = function(record) {
         record.schedules = record.schedules || [];
-        var promise = KService.getSchedulesList(record.stop.refs);
+        var promise = KService.getSchedulesList(record.city.code, record.stop.refs);
         promise.then(function(schedules) {
           record.schedules.length = 0;
           record.schedules.push.apply(record.schedules, schedules);
@@ -253,22 +245,32 @@
     '$rootScope', '$scope', 'KService', '$store', '$location',
     function($rootScope, $scope, KService, $store, $location) {
 
-      $rootScope.newRecord = {};
+      $scope.cities = [
+        {name: 'Dijon', code: 217},
+        {name: 'Pau', code: 117}
+      ];
 
-      $scope.lines = KService.getLinesList();
+      var newRecord = $rootScope.newRecord = {};
+
+      $scope.$watch('newRecord.city', function(city) {
+        $scope.lines = null;
+        if(city) {
+          $scope.lines = KService.getLinesList(city.code);
+        }
+      });
 
       $scope.$watch('newRecord.line', function(line) {
         $scope.stops = null;
         if(line) {
-          $scope.stops = KService.getStopsList(line.code, line.sens);
+          $scope.stops = KService.getStopsList(newRecord.city.code, line.code, line.sens);
         }
       });
 
       $rootScope.saveNewRecord = function() {
         var records = $store.get('records') || [];
-        records.push(angular.copy($rootScope.newRecord));
+        records.push(angular.copy(newRecord));
         $store.set('records', records);
-        $rootScope.newRecord = {};
+        newRecord = $rootScope.newRecord = {};
         $location.path('/');
       };
 
