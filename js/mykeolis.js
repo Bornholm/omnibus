@@ -6,6 +6,24 @@
 
   moment.lang('fr');
 
+  var CITIES = [
+    {name: 'Dijon', code: 217},
+    {name: 'Pau', code: 117},
+    {name: 'Le Mans', code: 105},
+    {name: 'Aix en Provence', code: 135},
+    {name: 'Soissons', code: 120},
+    {name: 'Caen', code: 147},
+    {name: 'Brest', code: 297},
+    {name: 'Pau-Agen', code: 402},
+    {name: 'St Etienne', code: 422},
+    {name: 'Nantes', code: 440},
+    {name: 'Montargis', code: 457},
+    {name: 'Angers', code: 497},
+    {name: 'Macon-Villefranche', code: 691},
+    {name: 'Epinay-sur-Orge', code: 910},
+    {name: 'Rennes', code: 999}
+  ];
+
   var myKeolis = angular.module('myKeolis', [
     'ngAnimate',
     'ngRoute',
@@ -245,14 +263,12 @@
     '$rootScope', '$scope', 'KService', '$store', '$location',
     function($rootScope, $scope, KService, $store, $location) {
 
-      $scope.cities = [
-        {name: 'Dijon', code: 217},
-        {name: 'Pau', code: 117}
-      ];
+      $scope.cities = CITIES;
 
       var newRecord = $rootScope.newRecord = {};
 
       $scope.$watch('newRecord.city', function(city) {
+        $scope.stops = null;
         $scope.lines = null;
         if(city) {
           $scope.lines = KService.getLinesList(city.code);
