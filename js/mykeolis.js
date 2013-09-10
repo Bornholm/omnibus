@@ -1,8 +1,18 @@
 (function(w) {
   'use strict';
   var angular = w.angular;
+  var moment = w.moment;
+  var visibly = w.visibly;
 
-  var myKeolis = angular.module('myKeolis', ['ngAnimate', 'ngRoute', 'FirefoxOS', 'localStorage', 'ngTouch']);
+  moment.lang('fr');
+
+  var myKeolis = angular.module('myKeolis', [
+    'ngAnimate',
+    'ngRoute',
+    'FirefoxOS',
+    'localStorage',
+    'ngTouch'
+  ]);
 
   myKeolis.config([
     '$routeProvider',
@@ -29,6 +39,24 @@
     KService
       .setKeolisEndpoint('http://timeo3.keolis.com/relais/')
       .setCityCode(217);
+  }]);
+
+  myKeolis.factory('visibly', ['$rootScope', function($rootScope) {
+
+    var api = {
+      isPageVisible: true
+    };
+    
+    function updateVisibility(isPageVisible) {
+      $rootScope.$apply(function() {
+        api.isPageVisible = isPageVisible;
+      });
+    }
+
+    visibly.onVisible(updateVisibility.bind(null, true));
+    visibly.onHidden(updateVisibility.bind(null, false));
+
+    return api; 
   }]);
 
   myKeolis.factory('KService', [
@@ -88,6 +116,13 @@
         return obj;
       }
 
+      function toScheduleObject(node) {
+        var obj = toObject(node);
+        var arr = obj.duree.split(':');
+        obj.moment = moment().hour(+arr[0]).minute(+arr[1]);
+        return obj;
+      }
+
       KService.getLinesList = function() {
         var deferred = $q.defer();
         var url = KService.getLinesServiceURL();
@@ -121,7 +156,7 @@
           .then(function(xhr) {
             var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
             var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml, null, XPathResult.ANY_TYPE, null);
-            var schedules = transformXPathResult(xPathResult, toObject);
+            var schedules = transformXPathResult(xPathResult, toScheduleObject);
             return deferred.resolve(schedules);
           });
         return deferred.promise;
@@ -147,26 +182,60 @@
 
     }
   ]);
-
-  $
+  
   myKeolis.controller('HomeCtrl', [
-    '$location', 'KService', '$scope', '$store', '$timeout',
-    function($location, KService, $scope, $store, $timeout) {
+    '$location', 'KService', '$scope', '$store', '$timeout', 'visibly',
+    function($location, KService, $scope, $store, $timeout, visibly) {
 
       $scope.records = $store.get('records') || [];
+      
+      $scope.visibly = visibly;
+
+      $scope.$watch('visibly.isPageVisible', function(isPageVisible) {
+        flushPendingUpdates();
+        noMoreUpdates = true;
+        if(isPageVisible) {
+          noMoreUpdates = false;
+          $scope.records.forEach($scope.autoUpdateRecordSchedule);
+        }
+      });
+
+      var noMoreUpdates = false;
+      var updatePromises = [];
+
+      function flushPendingUpdates() {
+        updatePromises.forEach($timeout.cancel);
+      }
+
+      $scope.$on('$destroy', function() {
+        flushPendingUpdates();
+        noMoreUpdates = true;
+      });
 
       $scope.updateRecordSchedules = function(record) {
-        delete record.schedules;
+        record.schedules = record.schedules || [];
         var promise = KService.getSchedulesList(record.stop.refs);
-        record.schedules = promise;
+        promise.then(function(schedules) {
+          record.schedules.length = 0;
+          record.schedules.push.apply(record.schedules, schedules);
+        });
         return promise;
       };
 
+      var REFRESH_RATE = 60 * 1000;
+
       $scope.autoUpdateRecordSchedule = function(record) {
-        $scope.updateRecordSchedules(record)
-          .then(function() {
-            $timeout($scope.autoUpdateRecordSchedule.bind(null, record), 20000);
-          })
+        var promise = $scope.updateRecordSchedules(record);
+        promise.then(function() {
+          updatePromises.splice(updatePromises.indexOf(promise), 1);
+          if(!noMoreUpdates) {
+            $timeout(
+              $scope.autoUpdateRecordSchedule.bind(null, record),
+              REFRESH_RATE
+            );
+          }
+        });
+        updatePromises.push(promise);
       };
 
       $scope.removeRecord = function(record) {

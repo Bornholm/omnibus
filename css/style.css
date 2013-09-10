@@ -12,10 +12,15 @@ body {
   border: none;
 }
 
+.logo {
+  height: 25px;
+  margin-right: 5px;
+}
+
 .navbar-brand.title {
   font-weight: bold;
   font-family: 'Fredoka One', cursive;
-  font-size: 22px;
+  font-size: 18px;
   color: #5c5c5c;
 }
 
@@ -25,17 +30,21 @@ body {
 }
 
 .title > .my {
-  font-size: 16px;
-  color: #DAF1FF;
+  font-size: 14px;
+  color: #F8FAFB;
 }
 
 .content {
-  padding-top: 50px;
+  padding-top: 60px;
+  background-color: white;
 }
 
-.keolis-record {
+.record {
   border-bottom: 1px solid #8D8F84;
   border-top: 1px solid white;
   padding-top: 10px;
-  background: #F8FAFB;
+}
+
+.destination {
+  font-size: 12px;
 }

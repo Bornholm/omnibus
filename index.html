@@ -14,7 +14,10 @@
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavBarCtrl">
       <div class="container">
-        <a class="navbar-brand title" href="#/"><span class="my">my</span><span class="keolis">Keolis</span></a>
+        <a class="navbar-brand title" href="#/">
+          <img class="logo" src="img/logo.png" />
+          <span class="my">my</span><span class="keolis">Keolis</span>
+        </a>
         <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right">
           <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -31,15 +34,21 @@
     </div>
 
     <script type="text/ng-template" id="home.html">
-      <div ng-repeat="r in records" ng-init="autoUpdateRecordSchedule(r)">
-        <div class="row keolis-record">
+      <div class="ng-cloak" ng-repeat="r in records">
+        <div class="row record">
           <div class="col-md-12">
             <button type="button pull-right" ng-click="removeRecord(r)" class="close" aria-hidden="true">&times;</button>
-            <b>Ligne <span ng-bind="r.line.nom"></span> - Direction <span ng-bind="r.line.vers"></span><b>
+            <p>
+              <b>Ligne <span ng-bind="r.line.nom"></span> - Arrêt <span ng-bind="r.stop.nom"></span></b><br />
+              <i class="destination">Direction <span ng-bind="r.line.vers"></span></i>
+            </p>
             <ul>
-              <li ng-repeat="s in r.schedules" ng-bind="s.duree"></li>
+              <li ng-repeat="s in r.schedules track by s.duree">
+                <b ng-bind="s.duree"></b>&nbsp;
+                (<i ng-bind="s.moment.fromNow()"></i>)
+              </li>
             </ul>
-            <p ng-hide="r.schedules && r.schedules.length">
+            <p class="ng-cloak" ng-show="!r.schedules || r.schedules.length === 0">
               <i>Aucune information pour le moment :(</i>
             </p>
           </div>
@@ -48,7 +57,7 @@
     </script>
 
     <script type="text/ng-template" id="new-item.html">
-      <div class="row">
+      <div class="row ng-cloak">
         <div class="col-md-12">
           <form role="form">
             <div class="form-group">
@@ -66,6 +75,9 @@
       </div>
     </script>
 
+    <script src="js/lib/visibly.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/moment/min/lang/fr.js"></script>
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
