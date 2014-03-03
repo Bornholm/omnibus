@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 201403032134
+# 201403032215
 
 CACHE:
 index.html
@@ -23,6 +23,9 @@ bower_components/angular-route/angular-route.min.js
 bower_components/angular-cookies/angular-cookies.min.js
 bower_components/Angular-localStorage/src/angularLocalStorage.js
 bower_components/bootstrap/dist/js/bootstrap.min.js
+bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
 
 NETWORK:
 *
