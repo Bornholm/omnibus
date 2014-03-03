@@ -25,10 +25,9 @@
   ];
 
   var myKeolis = angular.module('myKeolis', [
-    'ngAnimate',
     'ngRoute',
     'FirefoxOS',
-    'localStorage',
+    'angularLocalStorage',
     'ngTouch'
   ]);
 
@@ -53,8 +52,10 @@
     }
   ]);
 
+  /* Bootstrap application */
   myKeolis.run(['KService', function(KService) {
-    KService.setKeolisEndpoint('http://timeo3.keolis.com/relais/');
+    var endpoint = 'http://www.corsproxy.com/timeo3.keolis.com/relais/';
+    KService.setKeolisEndpoint(endpoint);
   }]);
 
   myKeolis.factory('visibly', ['$rootScope', function($rootScope) {
@@ -194,7 +195,7 @@
   ]);
   
   myKeolis.controller('HomeCtrl', [
-    '$location', 'KService', '$scope', '$store', '$timeout', 'visibly',
+    '$location', 'KService', '$scope', 'storage', '$timeout', 'visibly',
     function($location, KService, $scope, $store, $timeout, visibly) {
 
       $scope.records = $store.get('records') || [];
@@ -260,7 +261,7 @@
   ]);
 
   myKeolis.controller('NewItemCtrl', [
-    '$rootScope', '$scope', 'KService', '$store', '$location',
+    '$rootScope', '$scope', 'KService', 'storage', '$location',
     function($rootScope, $scope, KService, $store, $location) {
 
       $scope.cities = CITIES;
@@ -271,14 +272,22 @@
         $scope.stops = null;
         $scope.lines = null;
         if(city) {
-          $scope.lines = KService.getLinesList(city.code);
+          KService
+            .getLinesList(city.code)
+            .then(function(lines) {
+              $scope.lines = lines;
+            });
         }
       });
 
       $scope.$watch('newRecord.line', function(line) {
         $scope.stops = null;
         if(line) {
-          $scope.stops = KService.getStopsList(newRecord.city.code, line.code, line.sens);
+          KService
+          .getStopsList(newRecord.city.code, line.code, line.sens)
+          .then(function(stops) {
+            $scope.stops = stops;
+          });
         }
       });
 

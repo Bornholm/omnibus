@@ -1,0 +1,28 @@
+CACHE MANIFEST
+
+# 201403032112
+
+CACHE:
+index.html
+css/style.css
+img/cream_pixels.png
+img/icon-128.png
+img/icon-30.png
+img/icon-60.png
+img/logo.png
+js/lib/visibly.js
+js/firefoxos.js
+js/mykeolis.js
+bower_components/bootstrap/dist/css/bootstrap.min.css
+bower_components/moment/min/moment.min.js
+bower_components/moment/min/lang/fr.js
+bower_components/jquery/dist/jquery.min.js
+bower_components/angular/angular.min.js
+bower_components/angular-touch/angular-touch.min.js
+bower_components/angular-route/angular-route.min.js
+bower_components/angular-cookies/angular-cookies.min.js
+bower_components/Angular-localStorage/src/angularLocalStorage.js
+bower_components/bootstrap/dist/js/bootstrap.min.js
+
+NETWORK:
+*

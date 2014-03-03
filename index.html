@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myKeolis">
+<html ng-app="myKeolis" manifest="mykeolis.manifest">
   <head>
     <title>myKeolis</title>
     <meta charset="UTF-8">
@@ -7,8 +7,8 @@
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
-    <link href="css/animations.css" rel="stylesheet" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
+    <link rel="apple-touch-icon" href="img/icon-128.png">
+    <link rel="shortcut icon" href="img/icon-30.png" type="image/png" />
   </head>
   <body>
 
@@ -18,10 +18,10 @@
           <img class="logo" src="img/logo.png" />
           <span class="my">my</span><span class="keolis">Keolis</span>
         </a>
-        <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right">
+        <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right" ng-cloak>
           <span class="glyphicon glyphicon-plus"></span>
         </button>
-        <button ng-show="currentPath === '/new'" type="button" ng-disabled="!newRecord.line || !newRecord.stop" ng-click="saveNewRecord()" class="btn btn-default navbar-btn pull-right">
+        <button ng-show="currentPath === '/new'" type="button" ng-disabled="!newRecord.line || !newRecord.stop" ng-click="saveNewRecord()" class="btn btn-default navbar-btn pull-right" ng-cloak>
           <span class="glyphicon glyphicon-floppy-disk"></span>
         </button>
       </div>
@@ -29,7 +29,7 @@
 
     <div class="container content">
       <div class="row">
-        <div ng-view class="col-md-12"></div>
+        <div ng-view ng-cloak class="col-md-12"></div>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
               <i class="destination">Direction <span ng-bind="r.line.vers"></span></i>
             </p>
             <ul>
-              <li ng-repeat="s in r.schedules">
+              <li ng-repeat="s in r.schedules track by s.duree">
                 <b ng-bind="s.duree"></b>&nbsp;
                 (<i ng-bind="s.moment.fromNow()"></i>)
               </li>
@@ -88,13 +88,12 @@
     <script src="js/lib/visibly.js"></script>
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/moment/min/lang/fr.js"></script>
-    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="bower_components/Angular-localStorage/src/localStorage.js"></script>
+    <script src="bower_components/Angular-localStorage/src/angularLocalStorage.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/firefoxos.js"></script>
     <script src="js/mykeolis.js"></script>

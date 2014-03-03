@@ -1,7 +1,7 @@
 body {
   background: url('../img/cream_pixels.png') repeat;
   background-color: #E9EAE5;
-  font-family: 'Ubuntu Sans', 'Droid Sans', sans-serif;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
   color: #3D3D3D;
 }
 
@@ -19,7 +19,7 @@ body {
 
 .navbar-brand.title {
   font-weight: bold;
-  font-family: 'Fredoka One', cursive;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
   font-size: 18px;
   color: #5c5c5c;
 }
