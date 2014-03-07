@@ -11,5 +11,5 @@
   },
   "launch_path": "/index.html",
   "appcache_path": "/cache.manifest",
-  "default_locale": "fr",
+  "default_locale": "fr"
 }
