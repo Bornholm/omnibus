@@ -8,9 +8,10 @@
     "60": "img/icon-60.png",
     "30": "img/icon-30.png",
     "90": "img/icon-90.png",
-    "128": "img/icon-128.png"
+    "128": "img/icon-128.png",
+    "120": "img/icon-120.png"
   },
-  "launch_path": "http://bornholm.github.io/mykeolis/index.html",
-  "appcache_path": "http://bornholm.github.io/mykeolis/cache.manifest",
+  "launch_path": "/index.html",
+  "appcache_path": "/cache.manifest",
   "default_locale": "fr"
 }
