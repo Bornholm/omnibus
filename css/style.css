@@ -2,7 +2,7 @@ body {
   background: url('../img/cream_pixels.png') repeat;
   background-color: #E9EAE5;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  color: #3D3D3D;
+  color: #2C393B;
 }
 
 .navbar {
@@ -21,17 +21,17 @@ body {
   font-weight: bold;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
   font-size: 18px;
-  color: #5c5c5c;
+  color: #2C393B;
 }
 
 .title > .keolis {
-  text-shadow: 1px 1px 0px #eee;
-  filter: dropshadow(color=#eee, offx=1, offy=1);
+  text-shadow: 1px 1px 0px #EAEAE7;
+  filter: dropshadow(color=#EAEAE7, offx=1, offy=1);
 }
 
 .title > .my {
   font-size: 14px;
-  color: #F8FAFB;
+  color: #F4F4F4;
 }
 
 .content {
@@ -40,7 +40,7 @@ body {
 }
 
 .record {
-  border-bottom: 1px solid #8D8F84;
+  border-bottom: 1px solid #A6A6A6;
   border-top: 1px solid white;
   padding-top: 10px;
 }

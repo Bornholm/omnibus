@@ -26,7 +26,6 @@
 
   var myKeolis = angular.module('myKeolis', [
     'ngRoute',
-    'FirefoxOS',
     'angularLocalStorage',
     'ngTouch'
   ]);
@@ -77,8 +76,8 @@
   }]);
 
   myKeolis.factory('KService', [
-    '$http', '$q', 'systemXHR',
-    function($http, $q, systemXHR) {
+    '$http', '$q',
+    function($http, $q) {
 
       var KService = {};
 
@@ -137,9 +136,9 @@
       KService.getLinesList = function(cityCode) {
         var deferred = $q.defer();
         var url = KService.getLinesServiceURL(cityCode);
-        systemXHR(url)
-          .then(function(xhr) {
-            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+        $http.get(url)
+          .then(function(res) {
+            var xml = new DOMParser().parseFromString(res.data, 'text/xml');
             var xPathResult = xml.evaluate('//alss/als/ligne', xml, null, XPathResult.ANY_TYPE, null);
             var lines = transformXPathResult(xPathResult, toObject);
             return deferred.resolve(lines);
@@ -150,9 +149,9 @@
       KService.getStopsList = function(cityCode, codeLigne, sens) {
         var deferred = $q.defer();
         var url = KService.getStopsServiceURL(cityCode, codeLigne, sens);
-        systemXHR(url)
-          .then(function(xhr) {
-            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+        $http.get(url)
+          .then(function(res) {
+            var xml = new DOMParser().parseFromString(res.data, 'text/xml');
             var xPathResult = xml.evaluate('//alss/als', xml, null, XPathResult.ANY_TYPE, null);
             var stops = transformXPathResult(xPathResult, toStopObject);
             return deferred.resolve(stops);
@@ -163,9 +162,9 @@
       KService.getSchedulesList = function(cityCode, refsArret) {
         var deferred = $q.defer();
         var url = KService.getSchedulesServiceURL(cityCode, refsArret);
-        systemXHR(url, {'responseType': 'xml'})
-          .then(function(xhr) {
-            var xml = new DOMParser().parseFromString(xhr.responseText, 'text/xml');
+        $http.get(url)
+          .then(function(res) {
+            var xml = new DOMParser().parseFromString(res.data, 'text/xml');
             var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml, null, XPathResult.ANY_TYPE, null);
             var schedules = transformXPathResult(xPathResult, toScheduleObject);
             return deferred.resolve(schedules);

@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 201403032215
+# 201403070935
 
 CACHE:
 index.html
@@ -11,7 +11,6 @@ img/icon-30.png
 img/icon-60.png
 img/logo.png
 js/lib/visibly.js
-js/firefoxos.js
 js/mykeolis.js
 bower_components/bootstrap/dist/css/bootstrap.min.css
 bower_components/moment/min/moment.min.js
@@ -22,7 +21,6 @@ bower_components/angular-touch/angular-touch.min.js
 bower_components/angular-route/angular-route.min.js
 bower_components/angular-cookies/angular-cookies.min.js
 bower_components/Angular-localStorage/src/angularLocalStorage.js
-bower_components/bootstrap/dist/js/bootstrap.min.js
 bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
 bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
 bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
