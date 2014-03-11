@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 201403070956
+# 1
 
 CACHE:
 index.html
@@ -16,7 +16,7 @@ js/mykeolis.js
 bower_components/bootstrap/dist/css/bootstrap.min.css
 bower_components/moment/min/moment.min.js
 bower_components/moment/min/lang/fr.js
-bower_components/jquery/dist/jquery.min.js
+bower_components/jquery/jquery.min.js
 bower_components/angular/angular.min.js
 bower_components/angular-touch/angular-touch.min.js
 bower_components/angular-route/angular-route.min.js

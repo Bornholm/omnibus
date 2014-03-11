@@ -22,11 +22,10 @@
   "dependencies": {
     "angular": "~1.2.0",
     "bootstrap": "~3.0.0",
-    "zepto": "~1.0.0",
+    "jquery": "~1.9.0",
     "angular-route": "~1.2.0-rc.1",
     "Angular-localStorage": "~0.1.5",
     "angular-touch": "~1.2.0-rc.2",
-    "angular-animate": "~1.2.0-rc.2",
     "moment": "~2.1.0"
   }
 }

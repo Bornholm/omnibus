@@ -100,29 +100,28 @@
        return endpoint + cityCode + '.php?xml=1&ligne='+codeLigne+'&sens='+sens;
       };
 
-      function transformXPathResult(xPathResult, transform) {
-        var nodes = [];
-        var current;
-        while((current = xPathResult.iterateNext())) {
-          nodes.push(transform(current));
+      function transformNodes(nodes, transform) {
+        var res = [];
+        for(var i = 0, len = nodes.length; i < len; ++i) {
+          res.push(transform(nodes[i]));
         }
-        return nodes;
+        return res;
       }
 
       function toObject(node) {
         var obj = {};
-        var len = node.children.length;
+        var len = node.childNodes.length;
         var child;
         while(len--) {
-          child = node.children[len];
+          child = node.childNodes[len];
           obj[child.nodeName] = child.textContent;
         }
         return obj;
       }
 
       function toStopObject(node) {
-        var obj = toObject(node.children[0]);
-        obj.refs = node.children[2].textContent;
+        var obj = toObject(node.childNodes[1]);
+        obj.refs = node.childNodes[5].textContent;
         return obj;
       }
 
@@ -139,8 +138,8 @@
         $http.get(url)
           .then(function(res) {
             var xml = new DOMParser().parseFromString(res.data, 'text/xml');
-            var xPathResult = xml.evaluate('//alss/als/ligne', xml, null, XPathResult.ANY_TYPE, null);
-            var lines = transformXPathResult(xPathResult, toObject);
+            var nodes = xml.querySelectorAll('xmldata alss als ligne');
+            var lines = transformNodes(nodes, toObject);
             return deferred.resolve(lines);
           });
         return deferred.promise;
@@ -152,8 +151,8 @@
         $http.get(url)
           .then(function(res) {
             var xml = new DOMParser().parseFromString(res.data, 'text/xml');
-            var xPathResult = xml.evaluate('//alss/als', xml, null, XPathResult.ANY_TYPE, null);
-            var stops = transformXPathResult(xPathResult, toStopObject);
+            var nodes = xml.querySelectorAll('xmldata alss als');
+            var stops = transformNodes(nodes, toStopObject);
             return deferred.resolve(stops);
           });
         return deferred.promise;
@@ -165,8 +164,8 @@
         $http.get(url)
           .then(function(res) {
             var xml = new DOMParser().parseFromString(res.data, 'text/xml');
-            var xPathResult = xml.evaluate('//horaires/horaire/passages/passage', xml, null, XPathResult.ANY_TYPE, null);
-            var schedules = transformXPathResult(xPathResult, toScheduleObject);
+            var nodes = xml.querySelectorAll('xmldata horaires horaire passages passage');
+            var schedules = transformNodes(nodes, toScheduleObject);
             return deferred.resolve(schedules);
           });
         return deferred.promise;
