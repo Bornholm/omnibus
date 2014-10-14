@@ -1,9 +1,27 @@
-mykeolis
+myKeolis
 ========
 
 Application de suivi "temps réel" du réseau de transport Keolis.
 
+Démarrer avec les sources
+-------------------------
+
+```
+git clone https://github.com/Bornholm/mykeolis.git
+cd mykeolis
+bower install
+```
+Puis faire pointer votre serveur web vers le dossier `src`.
+
+Générer une version minifiée
+----------------------------
+
+```
+npm install
+npm run build
+```
+
 Licence
 -------
 
-MIT
+AGPL

@@ -1,16 +1,16 @@
 {
-  "name": "my-keolis",
+  "name": "myKeolis",
   "version": "0.0.0",
   "authors": [
-    "Bornholm <william.petit@lookingfora.name>"
+    "Bornholm <william.petit@ptitcloud.fr>"
   ],
   "description": "Keolis transports dashboard",
-  "main": "index.html",
+  "main": "src/index.html",
   "keywords": [
     "keolis",
     "transports"
   ],
-  "license": "GPL",
+  "license": "AGPL",
   "private": true,
   "ignore": [
     "**/.*",
