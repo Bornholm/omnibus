@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="myKeolis" manifest="cache.manifest">
+  <head>
+    <title>myKeolis</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/mykeolis.css">
+    <link rel="apple-touch-icon" href="img/icon-128.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="img/icon-30.png" type="image/png" />
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavBarCtrl">
+      <div class="container">
+        <a class="navbar-brand title" href="#/">
+          <img class="logo" src="img/logo.png" />
+          <span class="my">my</span><span class="keolis">Keolis</span>
+        </a>
+        <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right" ng-cloak>
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button ng-show="currentPath === '/new'" type="button" ng-disabled="!newRecord.line || !newRecord.stop" ng-click="saveNewRecord()" class="btn btn-default navbar-btn pull-right" ng-cloak>
+          <span class="glyphicon glyphicon-floppy-disk"></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="container content">
+      <div class="row">
+        <div ng-view ng-cloak class="col-md-12"></div>
+      </div>
+    </div>
+
+    <script type="text/ng-template" id="home.html">
+      <div class="ng-cloak" ng-repeat="r in records">
+        <div class="row record">
+          <div class="col-md-12">
+            <button type="button pull-right" ng-click="removeRecord(r)" class="close" aria-hidden="true">&times;</button>
+            <p>
+              <b>
+                <span ng-bind="r.city.name"></span> - Ligne <span ng-bind="r.line.nom"></span>
+                <br />
+                Arrêt <span ng-bind="r.stop.nom"></span>
+              </b>
+              <br />
+              <i class="destination">Direction <span ng-bind="r.line.vers"></span></i>
+            </p>
+            <ul>
+              <li ng-repeat="s in r.schedules track by s.duree">
+                <b ng-bind="s.duree"></b>&nbsp;
+                (<i ng-bind="s.moment.fromNow()"></i>)
+              </li>
+            </ul>
+            <p class="ng-cloak" ng-show="!r.schedules || r.schedules.length === 0">
+              <i>Aucune information pour le moment :(</i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="new-item.html">
+      <div class="row ng-cloak">
+        <div class="col-md-12">
+          <form role="form">
+            <div class="form-group">
+              <label for="citySelect">Localité</label>
+              <select class="form-control" ng-disabled="!cities" ng-model="newRecord.city" ng-options="c.name for c in cities" id="citySelect">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="lineSelect">Ligne</label>
+              <select class="form-control" ng-disabled="!lines" ng-model="newRecord.line" ng-options="'Ligne ' + l.nom + ' -> ' + l.vers for l in lines" id="lineSelect">
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="stopSelect">Arrêt</label>
+              <select class="form-control" ng-disabled="!stops" ng-model="newRecord.stop" ng-options="s.nom for s in stops" id="stopSelect">
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script src="js/mykeolis.js"></script>
+
+  </body>
+</html>

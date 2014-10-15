@@ -1,0 +1,17 @@
+CACHE MANIFEST
+
+# Build 1413317803830
+
+CACHE:
+index.html
+css/mykeolis.css
+img/cream_pixels.png
+img/icon-128.png
+img/icon-30.png
+img/icon-60.png
+img/icon-90.png
+img/logo.png
+js/mykeolis.js
+
+NETWORK:
+*
