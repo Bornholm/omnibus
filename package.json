@@ -17,7 +17,10 @@
   "dependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/gulp build"
+    "build": "./node_modules/.bin/gulp build",
+    "commit-built": "git add dist -A && git commit -m \"Fichiers dist au `date`\" -n > /dev/null 2>&1; exit 0",
+    "ghpages": "git subtree split --prefix dist/ -b gh-pages && git push -f origin gh-pages:gh-pages && git branch -D gh-pages",
+    "deploy": "npm run build && npm run commit-built && npm run ghpages"
   },
   "repository": {
     "type": "git",
