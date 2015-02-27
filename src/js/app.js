@@ -6,7 +6,7 @@
 
   moment.lang('fr');
 
-  var CORS_PROXY = 'http://omnibus.lookingfora.name';
+  var CORS_PROXY = 'http://omnibus.lookingfora.name/api';
 
   var CITIES = [
     {name: 'Dijon', code: 217},
