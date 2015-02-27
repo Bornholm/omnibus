@@ -1,5 +1,5 @@
 {
-  "name": "myKeolis",
+  "name": "Omnibus",
   "version": "0.0.0",
   "description": "Visualisation ",
   "main": "index.html",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Bornholm/mykeolis.git"
+    "url": "https://github.com/Bornholm/omnibus.git"
   },
   "keywords": [
     "transports",
@@ -33,7 +33,7 @@
   "author": "William Petit <william.petit@ptitcloud.fr>",
   "license": "AGPL",
   "bugs": {
-    "url": "https://github.com/Bornholm/mykeolis/issues"
+    "url": "https://github.com/Bornholm/omnibus/issues"
   },
-  "homepage": "https://github.com/Bornholm/mykeolis"
+  "homepage": "https://github.com/Bornholm/omnibus"
 }
