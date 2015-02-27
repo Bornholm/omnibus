@@ -1,4 +1,4 @@
-myKeolis
+Omnibus
 ========
 
 Application de suivi "temps réel" du réseau de transport Keolis.
@@ -7,8 +7,8 @@ Démarrer avec les sources
 -------------------------
 
 ```
-git clone https://github.com/Bornholm/mykeolis.git
-cd mykeolis
+git clone https://github.com/Bornholm/omnibus.git
+cd omnibus
 bower install
 ```
 Puis faire pointer votre serveur web vers le dossier `src`.
