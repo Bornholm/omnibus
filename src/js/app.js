@@ -6,6 +6,8 @@
 
   moment.lang('fr');
 
+  var CORS_PROXY = 'http://omnibus.lookingfora.name';
+
   var CITIES = [
     {name: 'Dijon', code: 217},
     {name: 'Pau', code: 117},
@@ -24,7 +26,7 @@
     {name: 'Rennes', code: 999}
   ];
 
-  var myKeolis = angular.module('myKeolis', [
+  var myKeolis = angular.module('Omnibus', [
     'ngRoute',
     'angularLocalStorage',
     'ngTouch'
@@ -53,7 +55,7 @@
 
   /* Bootstrap application */
   myKeolis.run(['KService', function(KService) {
-    var endpoint = 'http://www.corsproxy.com/timeo3.keolis.com/relais/';
+    var endpoint = CORS_PROXY+'/relais/';
     KService.setKeolisEndpoint(endpoint);
   }]);
 
@@ -62,7 +64,7 @@
     var api = {
       isPageVisible: true
     };
-    
+
     function updateVisibility(isPageVisible) {
       $rootScope.$apply(function() {
         api.isPageVisible = isPageVisible;
@@ -72,7 +74,7 @@
     visibly.onVisible(updateVisibility.bind(null, true));
     visibly.onHidden(updateVisibility.bind(null, false));
 
-    return api; 
+    return api;
   }]);
 
   myKeolis.factory('KService', [
@@ -191,13 +193,13 @@
 
     }
   ]);
-  
+
   myKeolis.controller('HomeCtrl', [
     '$location', 'KService', '$scope', 'storage', '$timeout', 'visibly',
     function($location, KService, $scope, $store, $timeout, visibly) {
 
       $scope.records = $store.get('records') || [];
-      
+
       $scope.visibly = visibly;
 
       $scope.$watch('visibly.isPageVisible', function(isPageVisible) {
@@ -299,5 +301,5 @@
 
     }
   ]);
-  
+
 }(window))

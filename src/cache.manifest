@@ -4,14 +4,14 @@ CACHE MANIFEST
 
 CACHE:
 index.html
-css/mykeolis.css
+css/style.css
 img/cream_pixels.png
 img/icon-128.png
 img/icon-30.png
 img/icon-60.png
 img/icon-90.png
 img/logo.png
-js/mykeolis.js
+js/app.js
 
 NETWORK:
 *

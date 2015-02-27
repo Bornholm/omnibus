@@ -24,14 +24,13 @@ body {
   color: #2C393B;
 }
 
-.title > .keolis {
-  text-shadow: 1px 1px 0px #EAEAE7;
-  filter: dropshadow(color=#EAEAE7, offx=1, offy=1);
+.title > .bus {
+  text-shadow: 1px 1px 0px #CBCBC6;
+  filter: dropshadow(color=#CBCBC6, offx=1, offy=1);
 }
 
-.title > .my {
-  font-size: 14px;
-  color: #F4F4F4;
+.title > .omni {
+  color: #F2F2F2;
 }
 
 .content {

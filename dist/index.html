@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html ng-app="myKeolis" manifest="cache.manifest">
+<html manifest="cache.manifest">
   <head>
-    <title>myKeolis</title>
+    <title>Omnibus</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/mykeolis.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="apple-touch-icon" href="img/icon-128.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="img/icon-30.png" type="image/png" />
   </head>
-  <body>
+  <body ng-cloak ng-app="Omnibus">
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavBarCtrl">
       <div class="container">
         <a class="navbar-brand title" href="#/">
           <img class="logo" src="img/logo.png" />
-          <span class="my">my</span><span class="keolis">Keolis</span>
+          <span class="omni">Omni</span><span class="bus">Bus</span>
         </a>
         <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right" ng-cloak>
           <span class="glyphicon glyphicon-plus"></span>
@@ -84,7 +84,7 @@
       </div>
     </script>
 
-    <script src="js/mykeolis.js"></script>
+    <script src="js/app.js"></script>
 
   </body>
 </html>

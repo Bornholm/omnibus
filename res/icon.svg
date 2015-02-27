@@ -40,17 +40,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.56"
-     inkscape:cx="45.312164"
-     inkscape:cy="109.77882"
+     inkscape:cx="-14.648774"
+     inkscape:cy="16.294025"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3950"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1871"
-     inkscape:window-height="1056"
-     inkscape:window-x="49"
-     inkscape:window-y="24"
+     inkscape:window-width="1600"
+     inkscape:window-height="850"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1">
     <sodipodi:guide
        orientation="1,0"
@@ -115,7 +115,7 @@
       <path
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
-         inkscape:export-filename="/home/william/workspace/mykeolis/img/icon.png"
+         inkscape:export-filename="/home/william/workspace/omnibus/src/img/logo.png"
          inkscape:connector-curvature="0"
          id="rect2996"
          d="m 27.969869,999.3622 c -21.6303602,0.714 -16.655733,16.5271 -17.957949,34.6208 -0.1675157,2.3277 1.450084,4.2731 3.598192,4.9694 l 0,2.929 c 0,0.7646 0.666388,1.3821 1.485492,1.3821 l 3.003995,0 c 0.819105,0 1.452482,-0.6175 1.452482,-1.3821 l 0,-2.6328 20.730866,0 0,2.7314 c 0,0.7647 0.633377,1.3822 1.452481,1.3822 l 3.003995,0 c 0.819104,0 1.485492,-0.6175 1.485492,-1.3822 l 0,-2.9618 c 0,-0.011 3.07e-4,-0.021 0,-0.033 2.223141,-0.6511 3.93466,-2.6203 3.763247,-5.0023 -2.52849,-19.1113 5.991109,-33.9793 -17.957948,-34.6208 l -4.060345,0 z m -4.489488,7.5693 13.237385,0 c 2.926089,0 7.394449,2.3483 7.394449,5.2654 l 0,5.2656 c 0,2.9171 -2.35566,5.2655 -5.281749,5.2655 l -17.462785,0 c -2.926088,0 -5.281748,-2.3484 -5.281748,-5.2655 l 0,-5.2656 c 0,-2.9171 4.46836,-5.2654 7.394448,-5.2654 z m -8.879941,23.2669 3.301093,0 c 0.444904,0 0.825274,0.7426 0.825274,1.6455 l 0,1.6126 c 0,0.9028 -0.38037,1.6455 -0.825274,1.6455 l -3.301093,0 c -0.444902,0 -0.792262,-0.7427 -0.792262,-1.6455 l 0,-1.6126 c 0,-0.9029 0.34736,-1.6455 0.792262,-1.6455 z m 27.56413,0.033 3.301094,0 c 0.444903,0 0.792263,0.7096 0.792263,1.6126 l 0,1.6454 c 0,0.9029 -0.34736,1.6126 -0.792263,1.6126 l -3.301094,0 c -0.444903,0 -0.792262,-0.7097 -0.792262,-1.6126 l 0,-1.6454 c 0,-0.903 0.347359,-1.6126 0.792262,-1.6126 z"
@@ -123,8 +123,8 @@
       <flowRoot
          inkscape:export-ydpi="90"
          inkscape:export-xdpi="90"
-         inkscape:export-filename="/home/william/workspace/mykeolis/img/icon.png"
-         transform="translate(-0.42857378,-8.857142)"
+         inkscape:export-filename="/home/william/workspace/omnibus/src/img/logo.png"
+         transform="translate(0.4939977,-6.857142)"
          style="font-size:18px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#3d3d3d;fill-opacity:1;stroke:none;font-family:UnPilgi;-inkscape-font-specification:Sans Italic"
          id="flowRoot3900"
          xml:space="preserve"><flowRegion
@@ -135,9 +135,7 @@
              height="35.714348"
              width="54.821426"
              id="rect3904" /></flowRegion><flowPara
-           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;fill:#3d3d3d;fill-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Medium"
-           id="flowPara3906"><flowSpan
-   id="flowSpan3910"
-   style="font-size:12px">m</flowSpan>K</flowPara></flowRoot>    </g>
+           style="font-size:16px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;fill:#3d3d3d;fill-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Medium"
+           id="flowPara3906">oB</flowPara></flowRoot>    </g>
   </g>
 </svg>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="myKeolis" manifest="cache.manifest">
+<html manifest="cache.manifest">
   <head>
-    <title>myKeolis</title>
+    <title>Omnibus</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- build:css css/mykeolis.css -->
+    <!-- build:css css/style.css -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <!-- endbuild -->
@@ -12,13 +12,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="img/icon-30.png" type="image/png" />
   </head>
-  <body>
+  <body ng-cloak ng-app="Omnibus">
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavBarCtrl">
       <div class="container">
         <a class="navbar-brand title" href="#/">
           <img class="logo" src="img/logo.png" />
-          <span class="my">my</span><span class="keolis">Keolis</span>
+          <span class="omni">Omni</span><span class="bus">Bus</span>
         </a>
         <button ng-show="currentPath === '/'" type="button" ng-click="showNewItemView()" class="btn btn-default navbar-btn pull-right" ng-cloak>
           <span class="glyphicon glyphicon-plus"></span>
@@ -87,7 +87,7 @@
       </div>
     </script>
 
-    <!-- build:js js/mykeolis.js -->
+    <!-- build:js js/app.js -->
     <script type="text/javascript" src="js/lib/visibly.js"></script>
     <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="bower_components/moment/min/lang/fr.js"></script>
@@ -97,7 +97,7 @@
     <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script type="text/javascript" src="bower_components/Angular-localStorage/src/angularLocalStorage.js"></script>
-    <script type="text/javascript" src="js/mykeolis.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <!-- endbuild -->
 
   </body>
