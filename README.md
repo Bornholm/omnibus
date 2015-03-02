@@ -1,4 +1,4 @@
-Omnibus
+![logo](./dist/img/logo.png) Omnibus
 ========
 
 Application de suivi "temps réel" du réseau de transport Keolis.
